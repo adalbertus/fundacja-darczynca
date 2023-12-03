@@ -66,7 +66,9 @@ class DonorService
         if (count($results) > 0) {
             $current = current($results);
             $donor->setUser($current['user']);
-            $this->userService->setRandomPasswordAndSendNewAccountNotification($current['user'], false, 'emails/donor/new_account.html.twig');
+            if (is_null($current['user']->getNewSendDate())) {
+                $this->userService->setRandomPasswordAndSendNewAccountNotification($current['user'], false, 'emails/donor/new_account.html.twig');
+            }
         } else {
             $donor->setUser(null);
         }

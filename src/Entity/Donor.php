@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[UniqueEntity("name", message: 'Nazwa darczyńcy ({{ value }}) już istnieje w systemie.')]
-#[Assert\Cascade]
+#[Assert\Cascade(exclude: ['user'])]
 #[ORM\Entity(repositoryClass: DonorRepository::class)]
 class Donor extends BaseEntity implements RegexpPatternInterface
 {
