@@ -2,18 +2,9 @@
 {% block content %}
 	<div class="col-md-6 mx-auto mt-5">
 		<h2>Oj! Pojawił się błąd, z którym nie wiem co zrobić...</h2>
-		<img src="{{ asset('build/images/error01.jpg') }}" class="img-fluid rounded mx-auto d-block" alt="błąd"/>
 		<a class="btn btn-primary mt-5 mx-auto d-block" href="{{path('app_homepage')}}">
 			<i class="fa-solid fa-house"></i>
 			Przejdź na stronę domową...
 		</a>
-		lub skontaktuj się z
-		<a href="https://wroclaw.oaza.pl/diakonie/srodkow-finansowych/">
-			<i class="fa-solid fa-link"></i>
-			Diecezialną Diakonią Finansową
-		</a>
-		&lt;<a href="mailto:finanse@wroclaw.oaza.pl">
-			<i class="fa-solid fa-at"></i>
-			finanse@wroclaw.oaza.pl</a>&gt;
 	</div>
 {% endblock content %}
