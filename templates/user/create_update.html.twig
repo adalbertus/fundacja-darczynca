@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	{% if user.isNew %}
+		Tworzenie nowego użytkownika
+	{% else %}
+		Edycja użytkownika
+		{{user}}
+	{% endif %}
+{% endblock page_title %}
+
+{% block header_title %}
+	{% if user.isNew %}
+		Tworzenie nowego użytkownika
+	{% else %}
+		Edycja użytkownika
+	{% endif %}
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	{{form_start(form)}}
+	<div class="row mb-3">
+		<div class="col-md-6">
+			{{form_row(form.email)}}
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-md-6">
+			{{form_row(form.first_name)}}
+		</div>
+		<div class="col-md-6">
+			{{form_row(form.last_name)}}
+		</div>
+	</div>
+
+	<div class="row mb-3">
+		<div class="col-md-6">
+			{{form_row(form.roles)}}
+		</div>
+	</div>
+	{{form_rest(form)}}
+	<div class="field is-grouped">
+		<button class="btn btn-primary me-3" name="save">Zapisz</button>
+		<a class="btn btn-outline-secondary" href="{{ path('app_users')}}">Anuluj</a>
+	</div>
+	{{form_end(form)}}
+{% endblock page_contents %}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pl-PL" class="h-100" data-bs-theme="{{color_theme}}">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}
+				{% if block("page_title") is defined %}
+					{% if block("page_title") %}
+						{{app_name}}:
+						{{block("page_title")}}
+					{% else %}
+						{{app_name}}
+					{% endif %}
+				{% else %}
+					{{app_name}}
+				{% endif %}
+
+			{% endblock title %}
+		</title>
+		<link
+		rel="icon" type="image/jpg" href="{{ asset('build/images/fundacja_icon.png') }}"/>
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+			{# <link rel="stylesheet" href="{{ asset('styles/app.css') }}"> #}
+		{% endblock stylesheets %}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock javascripts %}
+
+	</head>
+	<body
+		data-turbo="true" style="padding-top: 60px;" class="d-flex flex-column h-100">
+		<!-- padding-top uwzględnia fixed-top navbar -->
+		<header>
+			{% include "base_navigation.html.twig" %}
+		</header>
+		<main class="mb-3">
+			<div class="col-lg-11 col-md-12 mt-3 m-auto p-2">
+				{% include "common/_flashbag.html.twig" %}
+				{% block content %}{% endblock content %}
+			</div>
+		</main>
+
+		<footer class="footer mt-auto bg-body-tertiary fs-7 bg-opacity-50">
+			<div class="d-flex justify-content-between m-1 fs-7">
+				<div>
+					<em>Wojciech Pietkiewicz (2023)</em><!--lewo--></div>
+				<div>
+					<!--środek-->
+
+				</div>
+				<div>
+					<!--prawo-->
+					<span class="version">wersja:
+						{{app_version}}</span>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

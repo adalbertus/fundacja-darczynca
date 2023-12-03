@@ -1,0 +1,24 @@
+{% set toggle_first_tooltip = '' %}
+{% set toggle_last_tooltip = '' %}
+
+{% if first_tooltip %}
+	{% set toggle_first_tooltip %}
+	data-bs-toggle="tooltip" data-bs-title="{{first_tooltip}}"
+	{% endset %}
+{% endif %}
+
+{% if last_tooltip %}
+	{% set toggle_last_tooltip %}
+	data-bs-toggle="tooltip" data-bs-title="{{last_tooltip}}"
+	{% endset %}
+{% endif %}
+<div class="d-flex" style="font-size: 0.75rem;">
+	<div class="border rounded-start border-end-0 {{first_css}} p-1" {{toggle_first_tooltip}}>
+		{{first_html|raw}}
+		{{first}}
+	</div>
+	<div class="border rounded-end border-start-0 {{last_css}} p-1" {{toggle_last_tooltip}}>
+		{{last_html|raw}}
+		{{last}}
+	</div>
+</div>

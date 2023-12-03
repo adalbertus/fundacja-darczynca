@@ -1,0 +1,85 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Usuwanie darczyńcy:
+	{{ donor }}
+{% endblock page_title %}
+
+{% block header_title %}
+	<span class="text-danger">Usuwanie darczyńcy</span>
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	{{ form_start(form) }}
+
+	{% if latestsTransactions %}
+		<div class="alert alert-danger" role="alert">
+			<div class="fs-4 fw-bold">
+				<i class="fa-solid fa-hand"></i>
+				Darczyńca ma zarejestrowane wpłaty!
+			</div>
+			<div>Konieczne jest przepisanie wpłat na innego darczyńcę.</div>
+
+		</div>
+		{{form_row(form.donor)}}
+	{% endif %}
+
+
+	<div>
+		<div class="row mb-3">
+			<div class="col-md">
+				{{form_row(form.name)}}
+			</div>
+			<div class="col-md">
+				<label class="form-label required">E-mail</label>
+				<div class="input-group mb-3" data-controller="clipboard-copy">
+					<input class="form-control" type="text" value="{{donor.userEmailOrEmpty}}" data-clipboard-copy-target="source" readonly>
+					<button type="button" class="btn btn-sm btn-outline-info" data-action="clipboard-copy#copy" data-clipboard-copy-target="button" data-bs-toggle="tooltip" data-bs-title="Kopiuj adres e-mail do schowka">
+						<i class="fa-regular fa-clipboard"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			{{form_row(form.comment)}}
+		</div>
+		<div class="row mb-3">
+			<div class="col-sm">
+				<div class="fs-7 text-secondary">Data utworzenia</div>
+				<div>{{donor.createdAt|dateTime}}</div>
+			</div>
+			{% if is_granted('ROLE_ADMIN') %}
+				<div class="col-sm">
+					<div class="fs-7 text-secondary">Data modyfikacji</div>
+					<div>{{donor.createdAt|dateTime}}</div>
+				</div>
+			{% endif %}
+			{% if donor.user %}
+				<div class="col-sm">
+					<div class="fs-7 text-secondary">Data ostatniego logowania</div>
+					<div>{{donor.user.loginSuccess|dateTime}}</div>
+				</div>
+			{% endif %}
+		</div>
+
+		<div class="d-grid gap-2 d-sm-block">
+			<button class="btn btn-danger me-sm-3" name="delete">
+				<i class="fa-solid fa-trash-can"></i>
+				Usuń
+			</button>
+			{% if latestsTransactions %}
+				<a class="btn btn-primary me-sm-3" href="{{path('app_donor_transactions', {id: donor.id})}}" data-bs-toggle="tooltip" data-bs-title="Szczegółowa lista transakcji">
+					<i class="fa-solid fa-table-list"></i>
+					Transakcje</a>
+			{% endif %}
+			<a class="btn btn-outline-secondary" data-history-back>Anuluj</a>
+		</div>
+		{{ form_end(form) }}
+
+		<hr/>
+		<h3>Lista ostatnich wpłat</h3>
+		{% include "donor/_last_transactions.html.twig" with {last_transactions: latestsTransactions} %}
+	</div>
+{% endblock page_contents %}

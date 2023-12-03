@@ -1,0 +1,49 @@
+{% extends 'emails/base_email.html.twig' %}
+{% block email_content %}
+	<!-- email_template_new_user_notification -->
+	<h3>Dzień dobry!</h3>
+	<em>Ten e-mail został wygenerowany automatyczne. Proszę na niego nie odpowiadać.</em>
+	<hr/>
+	<p>Właśnie zostało dla Ciebie utworzone konto w aplikacji {{app_name}}.</p>
+	<p>Do prawidłowego działania należy jeszcze się zarejestrować (wymagane jest Twoje imię oraz nazwisko).</p>
+	<p>Parametry utworzonego konta:
+	</p>
+	<table>
+		<tbody>
+			<tr>
+				<td>Login</td>
+				<td>
+					<strong>{{user.email}}</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>Hasło</td>
+				<td>
+					<strong>{{plainPassword}}</strong>
+				</td>
+			</tr>
+
+		</tbody>
+	</table>
+	<p>
+		<strong style="color: red;">UWAGA!</strong>
+		Hasło należy zmienić po pierwszym zalogowaniu się!</p>
+	<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+		<tbody>
+			<tr>
+				<td align="left">
+					<table role="presentation" border="0" cellpadding="0" cellspacing="0">
+						<tbody>
+							<tr>
+								<td>
+									<a href="{{ registerUrl|raw }}" target="_blank">Rejestracja</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}

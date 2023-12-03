@@ -1,0 +1,30 @@
+{
+    "files.associations": {
+        "**/views/**/*.html": "twig",
+        "*.html.twig": "twig"
+    },
+    "emmet.includeLanguages": {
+        "twig": "html"
+    },
+    "phpunit.phpunit": "./vendor/bin/phpunit",
+    "phpunit.args": [
+        "-c",
+        "${workspaceFolder}/phpunit.xml.dist"
+    ],
+    // DOCKER VERSION
+    // "phpunit.command": "ssh -p 2222 root@localhost",
+    // // "phpunit.command": "docker exec -it `docker ps|grep web-php |cut -d' ' -f1`",
+    // "phpunit.php": "cd /var/www/html; php",
+    // "phpunit.phpunit": "/var/www/html/vendor/bin/phpunit",
+    // "phpunit.args": [
+    //     "-c",
+    //     "/var/www/html/phpunit.xml.dist"
+    // ],
+    // "phpunit.paths": {
+    //     "${workspaceFolder}/app": "/var/www/html",
+    // },
+    "php.problems.exclude": {
+        "vendor/": true,
+        "var/": true,
+    },
+}

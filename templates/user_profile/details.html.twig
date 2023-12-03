@@ -1,0 +1,27 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Profil użytkownika
+	{{ row.DisplayName }}
+{% endblock page_title %}
+
+{% block header_title %}
+	Profil użytkownika
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	<div class="row">
+		<div class="col-md-6">
+			{{form_row(form.firstName, {'attr': {'readonly': ''}})}}
+		</div>
+		<div class="col-md-6">
+			{{form_row(form.lastName, {'attr': {'readonly': ''}})}}
+		</div>
+	</div>
+	{{form_row(form.email, {'attr': {'readonly': ''}})}}
+	<div class="d-grid gap-2 d-sm-block">
+		<a class="btn btn-primary" href="{{ path('app_user_profile_update')}}">Edytuj</a>
+	</div>
+{% endblock page_contents %}

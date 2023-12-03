@@ -1,0 +1,81 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Darczyńca:
+	{{ donor }}
+{% endblock page_title %}
+
+{% block header_title %}
+	Dane szczegółowe darczyńcy
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	<div>
+		<div class="row mb-3">
+			<div class="col-md">
+				{{form_row(form.name, {'attr': {'readonly': ''}})}}
+				{% if is_granted('ROLE_ADMIN') %}
+					{{form_row(form.comment, {'attr': {'readonly': ''}})}}
+				{% endif %}
+			</div>
+			<div class="col-md">
+				<label class="form-label required">E-mail</label>
+				<div
+					class="input-group mb-3" data-controller="clipboard-copy">
+					{# {{ form_row(form.autocomplete_email, {'attr': {'disabled': ''}}) }} #}
+					<input class="form-control" type="text" value="{{donor.userEmailOrEmpty}}" data-clipboard-copy-target="source" readonly>
+					<button type="button" class="btn btn-sm btn-outline-info" data-action="clipboard-copy#copy" data-clipboard-copy-target="button" data-bs-toggle="tooltip" data-bs-title="Kopiuj adres e-mail do schowka">
+						<i class="fa-regular fa-clipboard"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-sm">
+				<div class="fs-7 text-secondary">Data utworzenia</div>
+				<div>{{donor.createdAt|dateTime}}</div>
+			</div>
+			{% if is_granted('ROLE_ADMIN') %}
+				<div class="col-sm">
+					<div class="fs-7 text-secondary">Data modyfikacji</div>
+					<div>{{donor.createdAt|dateTime}}</div>
+				</div>
+			{% endif %}
+			{% if donor.user %}
+				<div class="col-sm">
+					<div class="fs-7 text-secondary">Data ostatniego logowania</div>
+					<div>{{donor.user.loginSuccess|dateTime}}</div>
+				</div>
+			{% endif %}
+		</div>
+		{% if is_granted('ROLE_ADMIN') %}
+			<div class="row row-cols-1 ms-1 me-3 mb-3 p-3 border rounded">
+				<label class="form-label">Frazy wyszukiwania</label>
+				{% for pattern in form.donorSearchPatterns %}
+					<div class="mb-3">
+						<div class="input-group mb-3">
+							{{ form_widget(pattern.search_pattern, {'attr': {'readonly': ''}}) }}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<div class="d-grid gap-2 d-sm-block">
+			{% if is_granted('ROLE_ADMIN') %}
+				<a class="btn btn-primary me-sm-3" href="{{path('app_donor_update', {id: donor.id})}}">Edytuj</a>
+			{% endif %}
+			<a class="btn btn-primary me-sm-3" href="{{path('app_donor_transactions', {id: donor.id})}}" data-bs-toggle="tooltip" data-bs-title="Szczegółowa lista transakcji">
+				<i class="fa-solid fa-table-list"></i>
+				Transakcje</a>
+			{% if is_granted('ROLE_ADMIN') %}
+				<a class="btn btn-outline-secondary" data-history-back>Powrót</a>
+			{% endif %}
+		</div>
+	</div>
+	<hr/>
+	<h3>Lista ostatnich wpłat</h3>
+	{% include "donor/_last_transactions.html.twig" with {last_transactions: latestsTransactions} %}
+
+{% endblock page_contents %}

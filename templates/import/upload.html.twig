@@ -1,0 +1,100 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Import historii banku
+{% endblock page_title %}
+
+{% block header_title %}
+	Import danych bankowych
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	<div class="row row-cols-1 g-3">
+		<div class="col">
+			{{ form_start(form, {'attr': {'data-controller': 'upload'}}) }}
+			<div class="mb-3">
+				{{form_widget(form.filename)}}
+			</div>
+			<div class="d-grid gap-2">
+				<button type="submit" class="btn btn-primary" id="fileSubmit">
+					<div id="spinner" class="d-none spinner-border spinner-border-sm" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+					Wyślij</button>
+			</div>
+			{{ form_end(form) }}
+		</div>
+		<hr/>
+		<div class="col">
+			<div class="card">
+				<div class="card-header">
+					Format importowanego pliku dla
+					<img alt="Santander Bank Polska" height="32" src="{{ asset('build/images/santander.svg') }}"/>
+				</div>
+				<div class="card-body">
+					<p class="card-text">
+						Plik z danymi bankowymi musi spełniać poniższe kryteria:
+						<ul>
+							<li>Pierwszy wiersz jest wierszem nagłówkowym.</li>
+							<li>Wiersze > 1 zawierają dane historii banku.</li>
+							<li>Pola w wierszach są rozdzielone przecinkami.</li>
+						</ul>
+					</p>
+					<div class="card">
+						<div class="card-header">
+							Definicje pól
+						</div>
+						<div class="card-body">
+							<dl class="row">
+								<dt class="col-sm-3">Data księgowania</dt>
+								<dd class="col-sm-9">Data w formacie DD-MM-RRRR.<br/>
+									<span class="text-danger fw-medium">UWAGA: to pole jest użyte podczas importu danych!</span>
+								</dd>
+
+								<dt class="col-sm-3">Tytuł operacji</dt>
+								<dd class="col-sm-9">Tytuł operacji bankowej.<br/>
+									<span class="fst-italic">Pole używane do kategoryzowania historii banku. Np. do rozpoznania czy dana operacja bankowa jest darowizną.
+									</span>
+								</dd>
+
+								<dt class="col-sm-3">Dane strony operacji</dt>
+								<dd class="col-sm-9">Dane nadawcy przelewu.
+									<span class="fst-italic">Pole używane do rozpoznawania darczyńców. Np. w sytuacji gdy system rozpozna daną operację jako darowiznę.
+									</span>
+								</dd>
+
+								<dt class="col-sm-3">Rachunek strony operacji</dt>
+								<dd class="col-sm-9">Nr rachunku.</dd>
+
+								<dt class="col-sm-3">Kwota</dt>
+								<dd class="col-sm-9">Kwota operacji w PLN.</dd>
+
+								<dt class="col-sm-3">Saldo</dt>
+								<dd class="col-sm-9">Saldo po po wykonaniu tranakcji.
+									<span class="fst-italic">Pole jest ignorowane.</span>
+								</dd>
+
+								<dt class="col-sm-3">Pozycje historii</dt>
+								<dd class="col-sm-9">Nr pozycji danej operacji.
+									<span class="fst-italic">Pole jest ignorowane.</span>
+								</dd>
+							</dl>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							Przykład pliku (dane są wymyślone)
+						</div>
+						<div class="card-body">
+							<p class="card-text">
+								<pre>{{ source('import/santander_example_import_file.csv') }}</pre>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock page_contents %}

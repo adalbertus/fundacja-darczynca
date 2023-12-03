@@ -1,0 +1,28 @@
+{% if app.session.flashbag.peekAll() is not empty %}
+	{# <div class="container-fluid"> #}
+	{% for label, messages in app.flashes %}
+		{% for message in messages %}
+			<div class="alert alert-{{ label }} alert-dismissible fade show d-flex align-items-center" role="alert">
+				<div class="flex-shrink-0 ms-3 fs-2">
+					{% if label == 'danger' %}
+						<i class="fa-solid fa-triangle-exclamation"></i>
+					{% endif %}
+					{% if label == 'warning' %}
+						<i class="fa-solid fa-triangle-exclamation"></i>
+					{% endif %}
+					{% if label == 'info' %}
+						<i class="fa-solid fa-circle-info"></i>
+					{% endif %}
+					{% if label == 'success' %}
+						<i class="fa-solid fa-circle-check"></i>
+					{% endif %}
+				</div>
+				<div class="ms-3">
+					{{ message|raw }}
+				</div>
+				<button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{% endfor %}
+	{% endfor %}
+	{# </div> #}
+{% endif %}

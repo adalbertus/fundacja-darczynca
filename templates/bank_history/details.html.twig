@@ -1,0 +1,72 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Szczegóły historii banku
+{% endblock page_title %}
+
+{% block header_title %}
+	Szczegóły historii banku
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+
+	<form method="post">
+		<div
+			class="row mb-3">
+
+			{# BEGIN: Dane tylko do odczytu: Data, Kwota, Tytuł przelewu #}
+			<div class="col-md-6">
+				<label class="form-label">Data</label>
+				<input class="form-control" type="text" value="{{ data.date|date }}" disabled/>
+			</div>
+			<div class="col-md-6">
+				<label class="form-label">Kwota</label>
+				<input class="form-control" type="text" value="{{ data.value }}" disabled/>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-12">
+				<label class="form-label">Tytuł przelewu</label>
+				<textarea class="form-control" rows="2" disabled>{{ data.description }}</textarea>
+			</div>
+		</div>
+		<div class="row mb-3">
+
+			<div class="col-md-6">
+				<label class="form-label">Nadawca</label>
+				<input class="form-control" type="text" value="{{ data.sendername }}" disabled/>
+			</div>
+			<div class="col-md-6">
+				<label class="form-label">Konto nadawcy</label>
+				<input class="form-control" type="text" value="{{ data.senderBankAccount }}" disabled/>
+			</div>
+		</div>
+		{% if is_granted('ROLE_ADMIN') %}
+
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label class="form-label">Kategoria</label>
+					<input class="form-control" type="text" value="{{ data.category|categoryName }}" disabled/>
+				</div>
+			</div>
+			{% if data.donor %}
+				<div class="row mb-3">
+					<div class="col-md-6">
+						<label class="form-label">Darczyńca</label>
+						<input class="form-control" type="text" value="{{ data.donor }}" disabled/>
+					</div>
+				</div>
+			{% endif %}
+
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label class="form-label">Komentarz</label>
+					<textarea class="form-control" rows="2" disabled>{{ data.comment }}</textarea>
+				</div>
+			</div>
+		{% endif %}
+		<button class="btn btn-outline-secondary" name="cancel" data-history-back>Anuluj</button>
+	</div>
+</form>{% endblock page_contents %}

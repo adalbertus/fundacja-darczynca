@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Wysłano wiadomość e-mail z prośbą o zresetowanie hasła
+{% endblock %}
+
+{% block content %}
+	<div class="alert alert-info">
+		<p>
+			Jeśli konto odpowiadające Twojemu adresowi e-mail istnieje, to właśnie na niego została wysłana wiadomość zawierająca link, który możesz wykorzystać do zresetowania swojego hasła. Link ten wygaśnie w
+			{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+		</p>
+		<p>Jeśli nie otrzymasz wiadomości, sprawdź swój folder
+			<strong>SPAM</strong>
+			lub
+			<a href="{{ path('app_forgot_password_request') }}">spróbuj ponownie</a>.</p>
+	</div>
+{% endblock %}

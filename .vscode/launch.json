@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "PHP Debug WSL",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            // "pathMappings": {
+            //     "/var/www/html": "${workspaceFolder}/app",
+            // }
+        },
+        // {
+        //     "name": "PHP Debug DOCKER",
+        //     "type": "php",
+        //     "request": "launch",
+        //     "port": 9003,
+        //     "pathMappings": {
+        //         "/var/www/html": "${workspaceFolder}/app",
+        //     }
+        // },
+    ]
+}

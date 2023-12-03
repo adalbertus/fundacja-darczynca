@@ -1,0 +1,23 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        headers:
+            From: '%env(APP_NAME)% <%env(APP_NOREPLY_EMAIL)%>'
+            Reply-To: '%env(APP_NAME)% <%env(APP_CONTACT_EMAIL)%>'
+            Bcc: '%env(APP_NOREPLY_EMAIL)%'
+
+when@sit:
+    framework:
+        mailer:
+            headers:
+                From: 'SIT %env(APP_NAME)% <%env(APP_NOREPLY_EMAIL)%>'
+                Reply-To: 'SIT %env(APP_NAME)% <%env(APP_CONTACT_EMAIL)%>'
+
+when@dev:
+    framework:
+        mailer:
+            headers:
+                    From: 'DEV %env(APP_NAME)% <%env(APP_NOREPLY_EMAIL)%>'
+                    Reply-To: 'DEV %env(APP_NAME)% <%env(APP_CONTACT_EMAIL)%>'
+            envelope:
+                recipients: ['wojciech@pietkiewicz.pl']

@@ -1,0 +1,46 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Podsumowanie płatności za listy DK
+{% endblock %}
+
+{% block header_title %}
+	Podsumowanie płatności za Listy Domowego Kościoła
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+
+	<table class="table table-sm table-hover table-striped">
+		<thead>
+			<tr>
+				<th>Numer listu</th>
+				<th>Ilość sztuk
+				</th>
+				<th>Do zapłaty</th>
+				<th>
+					Zapłacone</th>
+				<th>Data wpłaty</th>
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+			{% for row in summary|filter(row => row.letter_number > 0) %}
+
+				<tr>
+					<td class="text-end">{{ row.letter_number }}</td>
+					<td class="text-end">{{ row.total_quantity_ordered }}</td>
+					<td class="text-end">
+						{{ row.total_price_ordered|formatPLN }}
+					</td>
+					<td class="text-end">
+						{{ row.total_paid | formatPLN }}
+					</td>
+					<td>{{row.last_date|date}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+		<tfoot></tfoot>
+	</table>
+
+{% endblock %}

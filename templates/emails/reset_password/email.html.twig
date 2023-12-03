@@ -1,0 +1,35 @@
+{% extends 'emails/base_email.html.twig' %}
+{% block email_content %}
+<!-- email_template_password_reset -->
+{% if first_name is empty %}
+	<h3>Witaj!</h3>
+{% else %}
+	<h3>Witaj
+		{{first_name}}!</h3>
+{% endif %}
+
+<p>Aby zresetować swoje hasło, proszę otworzyć następujący link</p>
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+	<tbody>
+		<tr>
+			<td align="left">
+				<table role="presentation" border="0" cellpadding="0" cellspacing="0">
+					<tbody>
+						<tr>
+							<td>
+								<a href="{{ url('app_reset_password', {token: resetToken.token}) }}" target="_blank">Resetowanie hasła</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p>Ten link wygasa w
+	{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>Pozdrowienia!</p>
+<em>{{app_name}}</em>
+{% endblock %}

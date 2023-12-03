@@ -1,0 +1,41 @@
+{# Wyświetlam wszystkie pola dla RŚŻ #}
+{% set first_html = '' %}
+{% set first_css = 'text-bg-dark' %}
+{% set last_html = '' %}
+{% set last_css = 'text-bg-info' %}
+
+<div>
+	{% if row.donor %}
+		{% set first_html = 'darczyńca' %}
+		{% set last_html %}
+		<a class="link-light" href="{{path('app_donor_details', {id:row.donor.id})}}">{{row.donor.name}}</a>
+		{% endset %}
+	{% endif %}
+
+	{% if first_html %}
+		{{ 
+		component('doublet', { 
+					first_html: first_html,
+					first_css: first_css,
+					last_html: last_html,
+					last_css: last_css,
+				})
+	}}
+
+	{% endif %}
+
+	{# Wyświetlam wszystkie pola wspólne #}
+	<span class="fs-6">
+		<em>{{row.comment|u.truncate(100, '...')}}</em>
+	</span>
+</div>
+
+{% if not row.isValid %}
+	{% for error in row.getValidationErrors %}
+		<span class="badge bg-danger">
+			<i class="fa-solid fa-circle-info"></i>
+			{{ error.message }}
+		</span>
+	{% endfor %}
+	{# </ul> #}
+{% endif %}

@@ -1,0 +1,72 @@
+{% extends 'emails/base_email.html.twig' %}
+{% block email_content %}
+
+
+	{# ########################################################## #}
+	{# UWAGA!!!!  #}
+	{# ZAPISYWAĆ BEZ FORMATOWANIA BO INACZEJ SIĘ SYPIE SZABLON!!! #}
+	{# ########################################################## #}
+
+
+	<!-- email_template_new_donor_user_notification -->
+	<h3>Dzień dobry.</h3>
+	<em>Ten e-mail został wygenerowany automatyczne. Proszę na niego nie odpowiadać.</em>
+	<hr/>
+	<p>Przed chwilą Twój adres e-mail został powiązany z darowizną, która została przekazana do: {{app_name}}.</p>
+	<p>Jesteśmy bardzo wdzięczni. Dzięki Tobie możemy realizować nasze zadania.<p>
+	<hr/>
+	<p>Ponieważ cenimy sobie pełną transparentność, umożliwiliśmy Tobie wgląd do wszystkich Twoich wpłat.
+	W tym celu utworzyliśmy dla Ciebie konto w naszym systemie, dzięki czemu możesz w każdej chwili zobaczyć jakie środki
+	zostały nam przez Ciebie przekazane.</p>  
+		{% if plainPassword %}
+		<!-- donor_with_new_user_notyfication -->
+		<p>Wystarczy zalogować się i gotowe!</p>
+		<p>
+		Parametry utworzonego konta:
+		</p>
+			<table>
+				<tbody>
+					<tr><td>Login
+					</td>
+						<td><strong>{{user.email}}
+					</strong>
+				</td>
+				</tr>
+					<tr><td>Hasło
+					</td>
+						<td><strong>{{plainPassword}}
+					</strong>
+				</td>
+			</tr>
+
+		</tbody>
+		</table>
+			<p><strong style="color: red;"> UWAGA!</strong>
+			Hasło należy zmienić po pierwszym zalogowaniu się!</p>
+		<table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+			<tbody>
+				<tr>
+					<td align="left">
+						<table role="presentation" border="0" cellpadding="0" cellspacing="0">
+							<tbody>
+								<tr>
+									<td>
+										<a href="{{ registerUrl|raw }}" target="_blank">LOGOWANIE</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+		Jeżeli powyższy przycisk 'LOGOWANIE' nie jest widoczny wystarczy przekopiować poniższy adres URL do przeglądarki:
+		{{ registerUrl|raw }}
+		</p>
+		<hr/>
+	{% endif %}
+	<br/>
+	
+
+	{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	{# START: OSTATNIE LOGOWANIE #}
+	<div class="col-12 mb-3">
+		<div class="card p-3 ">
+			<div class="row row-cols-2">
+				<div class="col">Czas ostatniego logowania:</div>
+				<div class="col text-end">{{ app.user.loginSuccess|date('Brak', 'Y-m-d H:i:s') }}</div>
+				<div class="col">Ostatnie nieudane logowanie:</div>
+				<div class="col text-end">{{ app.user.loginFailed|date('Brak', 'Y-m-d H:i:s') }}</div>
+			</div>
+		</div>
+	</div>
+	{# END: OSTATNIE LOGOWANIE #}
+
+	<div class="row text-center">
+		<div class="col-md-4 mb-3">
+			<div class="bg-opacity-25 text-bg-primary p-4 border border-primary rounded">
+				<h3>Suma wszystkich wpłat</h3>
+				<h1 {{ stimulus_controller('pager') }}>
+					{{summary.total|formatPLN}}
+				</h1>
+				<i class="fa-solid fa-piggy-bank fs-2"></i>
+			</div>
+		</div>
+		<div class="col-md-4 mb-3">
+			<div class="bg-opacity-25 text-bg-primary p-4 border border-primary rounded">
+				<h3>Suma wpłat z poprzedniego roku</h3>
+				<h1>{{summary.prev_year|formatPLN}}</h1>
+				<i class="fa-solid fa-piggy-bank fs-2"></i>
+			</div>
+		</div>
+		<div class="col-md-4 mb-3">
+			<div class="bg-opacity-25 text-bg-primary p-4 border border-primary rounded">
+				<h3>Suma wpłat z bieżącego roku</h3>
+				<h1>{{summary.cur_year|formatPLN}}</h1>
+				<i class="fa-solid fa-piggy-bank fs-2"></i>
+			</div>
+		</div>
+	</div>
+
+	<div class="mt-3 col-md-8 col-lg-6 m-auto">
+		<h4>Lista ostatnich wpłat</h4>
+		{% include "donor/_last_transactions.html.twig" with {last_transactions: summary.last5 } %}
+	</div>
+
+	<div class="text-center">
+		<a class="btn btn-primary me-sm-3" href="{{path('app_donor_transactions', {id: donor.id})}}" data-bs-toggle="tooltip" data-bs-title="Szczegółowa lista transakcji">
+			<i class="fa-solid fa-table-list"></i>
+			Pokaż wszystkie
+		</a>
+	</div>
+{% endblock content %}

@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Historia banku
+{% endblock page_title %}
+
+{% block header_title %}
+	Historia banku
+{% endblock header_title %}
+
+{% block header_right %}
+	<div style="width: 300px;">
+		{% include "bank_history/_summary.html.twig" %}
+	</div>
+{% endblock header_right %}
+
+{% block page_contents %}
+	<div {{ stimulus_controller('pager') }}>
+		{% if pager %}
+			{% include "bank_history/_table_navbar.html.twig" %}
+			<div class="table-responsive-xxl">
+				<table class="table table-sm table-hover table-striped align-middle">
+					{% include "bank_history/_table_header.html.twig" %}
+					<tbody class="table-group-divider">
+						{% if pager is empty %}
+							<tr>
+								<td colspan="5">
+									<i class="fa-solid fa-ghost"></i>
+									brak danych...</td>
+							</tr>
+						{% endif %}
+						{% for row in pager %}
+							{% include "bank_history/_table_row.html.twig" %}
+						{% endfor %}
+					</tbody>
+				</table>
+				<div
+					class="d-flex justify-content-end">
+					{# <div class="level-right"> #}
+					{% include "bank_history/_pager_controls.html.twig" %}
+					{# </div> #}
+				</div>
+			{% else %}
+				{# if bank_history_list #}
+				<div class="notification is-info">
+					brak rokordów do wyświetlenia.
+				</div>
+			{% endif %}
+			{# if bank_history_list #}
+		</div>
+	{% endblock page_contents %}

@@ -1,0 +1,27 @@
+"Lista transakcji";;;;;"ING Bank Œl¹ski S.A. ul. Sokolska 34, 40-086 Katowice www.ing.pl";;;;;;;;;;;;;;;
+"Dokument nr 312321312312321321";
+"Wygenerowany dnia: 2023-10-26, 06:09";;;;;;;;;;;;;;;;;;;;
+
+"Dane U¿ytkownika:";
+"KOWALSKI JAN, STEFANA MACZKA 13/81 52-123 KOZIA WÓLKA";
+
+"Wybrane rachunki:";
+"KONTO Direct (PLN)";;"39 1880 1019 7089 9898 6822 7266";
+
+"Zastosowane kryteria wyboru";;;;;"Podsumowanie";;
+
+"Zakres dat:";"2023-07-28 - 2023-10-26";"Typy transakcji:";"wszystkie";;"Liczba transakcji:";5;
+
+;;;;;"Suma uznañ (52):";33213,00;PLN;;;;;;;;;;;;;
+
+;;;;;"Suma obci¹¿eñ (15):";3133,98;PLN;;;;;;;;;;;;;
+
+"Data transakcji";"Data ksiêgowania";"Dane kontrahenta";"Tytu³";"Nr rachunku";"Nazwa banku";"Szczegó³y";"Nr transakcji";"Kwota transakcji (waluta rachunku)";"Waluta";"Kwota blokady/zwolnienie blokady";"Waluta";"Kwota p³atnoœci w walucie";"Waluta";"Saldo po transakcji";"Waluta";;;;;
+2023-10-25;2023-10-25;" TOMASZ ZBIGNIEW W¥S, UL. PDASDA 33, 59-923 DSDASLPDA ";" OBIADY DLA SZKO£Y";'36105000029682835194943924 ';"dddasdsadasda";" ";'202329897201978594';120,00;PLN;;;;;8071,71;PLN;;;;;
+2023-10-20;2023-10-20;" WITOLD W¥S, UL DASDASD DSA das 23, 16-420    KKDSASA ";" Wsparcie obiadów dla dzieci";'49154011025630598898602242 ';"Master Baster - Centrum Rozliczeniowe";" ";'202329397202660922';50,00;PLN;;;;;7951,71;PLN;;;;;
+2023-10-20;2023-10-20;" ZBIGNIEW BAZYLIK, DDasdasd  23/23, 12-321 Bia³ystok ";" Obiady dla dzieci";'09188000090677539109400924 ';"Centralnie Generalnie";" ";'202329397202660206';100,00;PLN;;;;;7901,71;PLN;;;;;
+2023-10-19;2023-10-19;" STEFAN          OGNISKO, UL.KOZIO£KA 8D, 87-541 POZNAÑ ";" STEFCIO ZJADA KOMARY";'39188010197089989868227266 ';"Elektryczny Bank";" ";'202329297203240375';100,00;PLN;;;;;7801,71;PLN;;;;;
+2023-10-17;2023-10-17;" D³uga nazwa pewnej firmy która n, ie mieœci siê w jednej linii, Ulica Uliczna 8 13-530 Œl¹sk ";" darowizna na obiady dla dzieci";'60188000097846061863618189 ';"Generalnie jest centralnie";" ";'202329097202489427';400,00;PLN;;;;;7701,71;PLN;;;;;
+
+
+"Dokument ma charakter informacyjny, nie stanowi dowodu ksiêgowego";

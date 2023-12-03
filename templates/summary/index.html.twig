@@ -1,0 +1,25 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Podsumowanie
+{% endblock %}
+
+{% block header_title %}
+	Podsumowanie
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th scope="row">Data aktualizacji</th>
+				<td>{{summary.updated}}</td>
+			</tr>
+
+		</tbody>
+	</table>
+
+{% endblock %}

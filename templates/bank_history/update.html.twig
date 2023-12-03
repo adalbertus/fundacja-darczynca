@@ -1,0 +1,88 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Edycja historii banku
+{% endblock page_title %}
+
+{% block header_title %}
+	Edycja historii banku
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+
+	<form method="post" data-controller="bank-history-edit" data-bank-history-edit-all-categories-value='{{categories|json_encode|raw}}' data-bank-history-edit-avaiable-categories-url-value="{{path('app_api_category')}}" data-bank-history-edit-all-categories-url-value="{{path('app_api_category')}}" data-bank-history-edit-assign-url-value="#">
+		<div
+			class="row mb-3">
+
+			{# BEGIN: Dane tylko do odczytu: Data, Kwota, Tytuł przelewu #}
+			<div class="col-md-6">
+				<label class="form-label">Data</label>
+				<input class="form-control" type="text" value="{{ data.date|date }}" disabled/>
+			</div>
+			<div class="col-md-6">
+				<label class="form-label">Kwota</label>
+				<input class="form-control" type="text" value="{{ data.value }}" disabled/>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-12">
+				<label class="form-label">Tytuł przelewu</label>
+				<textarea class="form-control" rows="2" disabled>{{ data.description }}</textarea>
+			</div>
+		</div>
+		<div class="row mb-3">
+
+			<div class="col-md-6">
+				<label class="form-label">Nadawca</label>
+				<input class="form-control" type="text" value="{{ data.sendername }}" disabled/>
+			</div>
+			<div class="col-md-6">
+				<label class="form-label">Konto nadawcy</label>
+				<input class="form-control" type="text" value="{{ data.senderBankAccount }}" disabled/>
+			</div>
+		</div>
+
+		<div
+			class="row mb-3">
+
+			{# BEGIN: Kategorie #}
+			<div class="col-md-6">
+				<label class="form-label">Kategoria</label>
+				<select class="form-select" data-bank-history-edit-target="categorySelect" data-action="bank-history-edit#categoryChanged">
+					<option>
+						Ładowanie danych...
+					</option>
+				</select>
+				{{ form_errors(form.category) }}
+				{# {{form_row(form.category_select, {'attr': {'data-bank-history-edit-target': 'categorySelect'}})}} #}
+				{{form_row(form.category, {'attr': {'data-bank-history-edit-target': 'category'}})}}
+			</div>
+			{# END: Kategorie #}
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-6 d-none" data-bank-history-edit-target='donor'>
+				{{form_row(form.donor)}}
+			</div>
+
+		</div>
+
+
+		{{form_row(form.comment)}}
+		{{form_row(form.flagged)}}
+
+		<div class="d-grid gap-2 d-sm-block">
+			<button class="btn btn-primary me-sm-3" name="save">
+				<i class="fa-solid fa-floppy-disk"></i>
+				Zapisz
+			</button>
+			<button class="btn btn-outline-primary me-sm-3" {% if not data.donor %} disabled {% endif %} data-action="bank-history-edit#assign" data-bank-history-edit-target="assignButton">
+				<i class="fa-solid fa-thumbtack"></i>
+				Przypisz tytuł do darczyńcy
+			</button>
+			<button class="btn btn-outline-secondary" name="cancel" data-history-back>Anuluj</button>
+		</div>
+		{{ form_rest(form) }}
+	</form>
+{% endblock page_contents %}

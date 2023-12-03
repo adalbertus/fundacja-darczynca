@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Zatwierdzenie importu
+{% endblock page_title %}
+
+{% block header_title %}
+	Import danych bankowych - zatwierdzanie
+{% endblock header_title %}
+
+{% block header_right %}
+	<div class="d-flex align-items-end">
+		{% if errorCount %}
+			<div class="me-2">
+				<span class="badge bg-danger">
+					Łączna ilość błędów:
+					{{errorCount}}
+				</span>
+			</div>
+		{% endif %}
+	</div>
+{% endblock header_right %}
+
+{% block header_left %}
+	{% if bankHistoryList %}
+		<div>
+			<a class="btn btn-sm btn-primary" data-action="import#analyze" href="{{path('app_import_confirm')}}" data-import-target="analyze">
+				<i class="fa-solid fa-hurricane"></i>
+				<span class="d-none spinner-border spinner-border-sm"></span>
+				Ponowna analiza
+			</a>
+		</div>
+	{% endif %}
+{% endblock header_left %}
+
+{% block page_contents %}
+
+	<div data-controller='import' data-import-error-count-value='{{errorCount}}' data-import-analyze-url-value="{{path('app_import_analyze')}}">
+		{% if bankHistoryList %}
+			<form class="form" method="post">
+				<div class="table-responsive-xxl">
+					<table class="table table-sm table-hover table-striped align-middle">
+						{% include "bank_history/_table_header.html.twig" %}
+						<tbody class="table-group-divider">
+							{% for row in bankHistoryList %}
+								{% include "bank_history/_table_row.html.twig" %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="alert alert-danger d-none" data-import-target="errorHelp">
+					<i class="fs-5 fa-solid fa-triangle-exclamation"></i>
+					<strong class="fs-5">UWAGA!</strong>
+					Import zawiera błędy - nie powinno się go zatwierdzać, ponieważ może to spowodować niespójność danych!
+				</div>
+				<div class="d-grid gap-2 d-sm-block">
+					<button class="btn btn-sm btn-primary me-sm-3" name="save" data-import-target="confirmButton">Zatwierdź</button>
+					{% if errorCount > 0 %}
+						{{form_widget(form.ignoreErrors, {'attr': {
+							'class': 'btn btn-sm btn-danger me-sm-3',
+							
+						}})}}
+					{% else %}
+						{{form_widget(form.ignoreErrors, {'attr': {
+							'class': 'btn btn-sm btn-danger me-sm-3',
+							'disabled': ''
+						}})}}
+					{% endif %}
+					<a class="btn btn-sm btn-outline-secondary" href="{{ path('app_homepage')}}">Anuluj</a>
+				</div>
+				{{ form_rest(form) }}
+			</form>
+		{% else %}
+			<div class="alert alert-info">
+				<i class="fa-solid fa-circle-info"></i>
+				Brak rekordów do zatwierdzenia.
+			</div>
+		{% endif %}
+	</div>
+{% endblock page_contents %}

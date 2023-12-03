@@ -1,0 +1,111 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	{% if donor.isNew %}
+		Utworzenie darczyńcy
+	{% else %}
+		Edycja darczyńcy:
+		{{ donor }}
+	{% endif %}
+{% endblock page_title %}
+
+{% block header_title %}
+	{% if donor.isNew %}
+		Tworzenie darczyńcy
+	{% else %}
+		Edycja danych darczyńcy
+	{% endif %}
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	<div {{ stimulus_controller('donor-update') }} data-donor-update-index-value="{{ form.donorSearchPatterns|length > 0 ? form.donorSearchPatterns|last.vars.name + 1 : 0 }}">
+		<template {{ stimulus_target('donor-update', 'searchPatternTemplate') }}>
+			<div class="mb-3">
+				<div class="input-group mb-3">
+					<input/>
+					<button class="btn btn-outline-danger" type="button" {{ stimulus_action('donor-update', 'remove') }}>Usuń frazę</button>
+				</div>
+			</div>
+		</template>
+		<template {{ stimulus_target('donor-update', 'searchPatternInputTemplate') }}>
+			{{ form_widget(form.donorSearchPatterns.vars.prototype) }}
+		</template>
+
+		{# {{ form_start(form, {'attr': {'novalidate': ''}}) }} #}
+		{{ form_start(form) }}
+
+		<div class="row mb-3">
+			<div class="col-md">
+				{{form_row(form.name)}}
+				{{form_row(form.comment)}}
+			</div>
+			<div class="col-md">
+				{{form_row(form.autocomplete_email)}}
+				<div class="form-text">
+					<p>Podanie adresu e-mail darczyńcy powoduje automatyczne utworzenie konta, dzięki któremu będzie on mógł sprawdzić stan swoich wpłat.</p>
+					<div class="d-flex align-items-center text-bg-warning">
+						<div class="flex-shrink-0 ms-3 fs-4">
+							<i class="fa-solid fa-circle-info"></i>
+						</div>
+						<p class="m-3">
+							Pamiętaj o wcześniejszym uprzedzeniu darczyńcy, ponieważ dostanie on automatyczny e-mail z danymi dostępowymi.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col-sm">
+				<div class="fs-7 text-secondary">Data utworzenia</div>
+				<div>{{donor.createdAt|dateTime}}</div>
+			</div>
+			<div class="col-sm">
+				<div class="fs-7 text-secondary">Data modyfikacji</div>
+				<div>{{donor.createdAt|dateTime}}</div>
+			</div>
+			{% if donor.user %}
+				<div class="col-sm">
+					<div class="fs-7 text-secondary">Data ostatniego logowania</div>
+					<div>{{donor.user.loginSuccess|dateTime}}</div>
+				</div>
+			{% endif %}
+		</div>
+		<div class="row row-cols-1 ms-1 me-3 mb-3 p-3 border rounded">
+			<label class="form-label">Frazy wyszukiwania
+				<button class="btn btn-outline-primary btn-sm ms-3" type="button" {{ stimulus_action('donor-update', 'add') }} data-bs-toggle="tooltip" data-bs-title="Dodaj frazę">
+					<i class="fa-solid fa-circle-plus"></i>
+				</button>
+			</label>
+			<div class="form-text">
+				<p>Zazwyczaj nie powinno być potrzeby educji fraz wyszukiwania, wartości są generowane automatycznie przy tworzeniu darczyńcy w trakcie importowania danych bankowych.</p>
+			</div>
+			{{ form_errors(form) }}
+			<div {{ stimulus_target('donor-update', 'searchPatternsContainer') }}>
+				{% for pattern in form.donorSearchPatterns %}
+					<div class="mb-3">
+						<div class="input-group mb-3">
+							{{ form_widget(pattern.search_pattern) }}
+							<button class="btn btn-outline-danger" type="button" {{ stimulus_action('donor-update', 'remove') }} data-pattern-id="{{pattern.search_pattern.vars.id}}">Usuń frazę</button>
+						</div>
+						{{ form_errors(pattern.search_pattern) }}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		{{ form_rest(form) }}
+
+
+		<div class="d-grid gap-2 d-sm-block">
+			<button class="btn btn-primary me-sm-3" name="save">
+				<i class="fa-solid fa-floppy-disk"></i>
+				Zapisz
+			</button>
+			<a class="btn btn-outline-secondary" data-history-back>Anuluj</a>
+		</div>
+
+		{{ form_end(form) }}
+	</div>
+{% endblock page_contents %}

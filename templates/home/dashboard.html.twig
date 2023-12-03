@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block content %}
+	{# START: OSTATNIE LOGOWANIE #}
+	<div class="col-12 mb-3">
+		<div class="card p-3 ">
+			<div class="row row-cols-2">
+				<div class="col">Czas ostatniego logowania:</div>
+				<div class="col text-end">{{ app.user.loginSuccess|date('Brak', 'Y-m-d H:i:s') }}</div>
+				<div class="col">Ostatnie nieudane logowanie:</div>
+				<div class="col text-end">{{ app.user.loginFailed|date('Brak', 'Y-m-d H:i:s') }}</div>
+			</div>
+		</div>
+	</div>
+	{# END: OSTATNIE LOGOWANIE #}
+{% endblock content %}

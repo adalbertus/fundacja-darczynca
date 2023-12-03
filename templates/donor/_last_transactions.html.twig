@@ -1,0 +1,59 @@
+<div class="table-responsive-xxl">
+	<table
+		class="table table-sm table-hover table-striped align-middle">
+		{# nagłówek tabeli używany w bank_history/index oraz import/confirm #}
+		<thead>
+			<tr>
+				<th style="width: 100px;">
+					Data
+				</th>
+				<th style="width: 110px;">
+					Kwota
+				</th>
+
+				<th>Szczegóły</th>
+				{# <th style="width: 20%;">Szczegóły</th> #}
+				<th></th>
+			</tr>
+		</thead>
+		<tbody class="table-group-divider">
+			{% if last_transactions is empty %}
+				<tr>
+					<td colspan="4">
+						<i class="fa-solid fa-ghost"></i>
+						brak danych...</td>
+				</tr>
+			{% endif %}
+			{% for row in last_transactions %}
+				<tr>
+					<td>
+						{{ row.date|date('Y-m-d') }}
+					</td>
+					<td class="text-end">
+						{% if row.value < 0 %}
+							<span class="text-danger">{{ row.value | formatPLN }}</span>
+						{% else %}
+							{{ row.value | formatPLN }}
+						{% endif %}
+					</td>
+
+					<td class="lh-sm">
+						{{ row.description }}
+					</td>
+					<td class="text-end">
+						<div class="btn-group">
+							{% if is_granted('ROLE_ADMIN') %}
+								<a class="btn btn-primary btn-sm" href="{{path('app_bank_history_update', {id: row.id})}}">Edytuj</a>
+							{% else %}
+								<a class="btn btn-primary btn-sm" href="{{path('app_bank_history_details', {id: row.id})}}">
+									<i class="fa-solid fa-eye"></i>
+									Pokaż
+								</a>
+							{% endif %}
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

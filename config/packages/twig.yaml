@@ -1,0 +1,15 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+
+    form_themes: ['bootstrap_5_layout.html.twig']
+
+    globals:
+        app_name: '%app.name%'
+        app_version: '%app.version%'
+        app_contact_email: '%app.contact_email%'
+        app_webpage_url: '%app.webpage_url%'
+        color_theme: '%app.color_theme%'
+
+when@test:
+    twig:
+        strict_variables: true

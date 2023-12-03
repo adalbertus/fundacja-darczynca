@@ -1,0 +1,41 @@
+{# templates/layout.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% if layout_narrow|default(false) %}
+	{% set css_width_mod = 'col-xl-8 mx-auto' %}
+{% else %}
+	{% set css_width_mod = '' %}
+{% endif %}
+
+{% block content %}
+	<div class="{{css_width_mod}}">
+		<div class="d-flex align-items-end mb-1 flex-wrap">
+			<div
+				class="me-auto">
+				<!-- LEWA STRONA -->
+				<div class="d-flex flex-row">
+					<div>
+						<h3>
+							{{block("header_title")}}
+						</h3>
+					</div>
+					{% if block("header_left") is defined %}
+						<div class="ms-1">
+							{{block("header_left")}}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			<div>
+				<!-- PRAWA STRONA -->
+				{% if block("header_right") is defined %}
+					{{block("header_right")}}
+				{% endif %}
+			</div>
+		</div>
+
+	</div>
+	<div class="{{css_width_mod}} border shadow-sm p-3 bg-body rounded">
+		{% block page_contents %}{% endblock page_contents %}
+	</div>
+{% endblock %}

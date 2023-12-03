@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block page_title %}
+	Logowanie
+{% endblock page_title %}
+{% block content %}
+
+	<div class="d-flex justify-content-center align-items-center mt-5 pt-5">
+		<div class="border shadow-sm col-xl-4 col-lg-6 col-md-8 col-sm-10 col-12 ">
+			<form class="m-4" method="post" action="{{ path('app_login') }}">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+				{% if error %}
+					<div class="alert alert-danger" role="alert">
+						<p>Nazwa użytkownia lub hasło są niepoprawne.</p>
+						<p>
+							<strong>Uwaga</strong>: wielkość liter ma znaczenie.</p>
+					</div>
+				{% endif %}
+				{# <img class="mb-4" src="{{ asset('build/images/rsz-logo-h-black.png') }}"> #}
+				<h3>Proszę się zalogować</h3>
+				<div
+					class="input-group mb-3 mt-5">
+					<!-- form-floating mb-3 -->
+					<span class="input-group-text" id="basic-addon1">
+						<i class="fa-solid fa-envelope"></i>
+					</span>
+					<input
+					type="email" class="form-control" name="_username" id="email" placeholder="jan.kowalski@gmail.com" autocomplete="username" autofocus required value="{{ last_username }}">
+				{# <label for="email">Adres e-mail</label> #}
+				</div>
+				<div class="input-group mb-3">
+					<span class="input-group-text" id="basic-addon1">
+						<i class="fa-solid fa-key"></i>
+					</span>
+					<input
+					type="password" name="_password" class="form-control" id="password" placeholder="Hasło" autocomplete="current-password" required>
+				{# <label for="password">Hasło</label> #}
+				</div>
+				<button class="w-100 btn btn-lg btn-primary" type="submit">Zaloguj się</button>
+				<div
+					class="text-center mt-3">
+					{# Assumes you set up the password_reset view in your URLconf #}
+					<a href="{{path('app_forgot_password_request')}}">Nie pamiętasz hasła?</a>
+				</div>
+			</form>
+		</div>
+	</div>
+
+{% endblock content %}

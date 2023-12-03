@@ -1,0 +1,41 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Rejestracja nowego użytkownika
+{% endblock page_title %}
+
+{% block header_title %}
+	Rejestracja nowego użytkownika2
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	<p class="alert alert-info">
+		Użytkownik jeszcze nie przeszedł w pełni procesu rejestracji. Aby skorzystać z serwisu wymagane jest podanie swoich podstawowych danych oraz ustalić swoje hasło.
+	</p>
+	<div class="border shadow-sm p-3 mb-5 bg-body rounded">
+
+		<form class="form" method="post">
+			<div class="row mb-3">
+				<div class="col-lg-4 col-xl-3">
+					{{form_row(form.first_name)}}
+				</div>
+				<div class="col-lg-4 col-xl-3">
+					{{form_row(form.last_name)}}
+				</div>
+			</div>
+			<div class="row mb-3">
+				<div class="col-lg-4 col-xl-3">
+					{{ form_row(form.plainPassword) }}
+				</div>
+			</div>
+			<div class="d-grid gap-2 d-sm-block">
+				<button class="btn btn-primary" name="save">Zarejestruj się</button>
+			</div>
+
+			{{ form_rest(form) }}
+
+		</form>
+	</div>
+{% endblock page_contents %}

@@ -1,0 +1,75 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}
+	Użytkownik:
+	{{ user }}
+{% endblock page_title %}
+
+{% block header_title %}
+	Dane szczegółowe użytkownika
+{% endblock header_title %}
+
+{% set layout_narrow = true %}
+
+{% block page_contents %}
+	{% set user_not_logged_in_tooltip %}
+	{% if not user.firstName %}
+		data-bs-toggle="tooltip" data-bs-title="Użytkownik jeszcze nigdy się nie zalogował, stąd brak danych."
+	{% endif %}
+	{% endset %}
+	<div>
+		<div class="row mb-3">
+			<div class="col-md" {{user_not_logged_in_tooltip}}>
+				{{form_row(form.first_name, {'attr': {'readonly': '', placeholder: 'brak danych'}})}}
+			</div>
+			<div class="col-md" {{user_not_logged_in_tooltip}}>
+				{{form_row(form.last_name, {'attr': {'readonly': '', placeholder: 'brak danych'}})}}
+			</div>
+
+		</div>
+		<div class="row mb-3">
+			<div class="col-md-6">
+				<label class="form-label required">E-mail</label>
+				<div class="input-group mb-3" data-controller="clipboard-copy">
+					<input class="form-control" type="text" value="{{user.email}}" data-clipboard-copy-target="source" readonly>
+					<button type="button" class="btn btn-sm btn-outline-info" data-action="clipboard-copy#copy" data-clipboard-copy-target="button" data-bs-toggle="tooltip" data-bs-title="Kopiuj adres e-mail do schowka">
+						<i class="fa-regular fa-clipboard"></i>
+					</button>
+				</div>
+			</div>
+			{% if user.donors is not empty %}
+				<div class="col-md-6">
+					<label class="form-label required">Powiązani darczyńcy</label>
+					<div class="mb-3 mt-1">
+						{% for donor in user.donors %}
+							<span class="me-1">
+								{% include "donor/_donor.html.twig" with { donor: donor} %}
+							</span>
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+		</div>
+		<div class="row mb-3">
+			<div class="col-sm">
+				<div class="fs-7 text-secondary">Data utworzenia</div>
+				<div>{{user.createdAt|dateTime}}</div>
+			</div>
+			<div class="col-sm">
+				<div class="fs-7 text-secondary">Data modyfikacji</div>
+				<div>{{user.createdAt|dateTime}}</div>
+			</div>
+			<div class="col-sm">
+				<div class="fs-7 text-secondary">Data ostatniego logowania</div>
+				<div>{{user.loginSuccess|dateTime}}</div>
+			</div>
+		</div>
+
+		<div class="d-grid gap-2 d-sm-block">
+			<a class="btn btn-primary me-sm-3" href="{{path('app_user_update', {id: user.id})}}">Edytuj</a>
+
+			<a class="btn btn-outline-secondary" data-history-back>Powrót</a>
+		</div>
+	</div>
+
+{% endblock page_contents %}

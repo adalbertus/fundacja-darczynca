@@ -1,0 +1,21 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+$h7-font-size: $font-size-base * 0.9;
+
+$utilities: map-merge($utilities,
+                ("font-size": map-merge(map-get($utilities, "font-size"),
+                                (values: map-merge(map-get(map-get($utilities, "font-size"), "values"),
+                                                (7: $h7-font-size), ),
+                                ),
+                        ),
+                ));
+
+.ts-control,
+.ts-control input {
+        color: inherit;
+}
+
+
+// .ts-control input {
+//   color: #343a40;
+// }

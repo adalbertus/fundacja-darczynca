@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+{% block content %}
+
+	{% if is_granted('ROLE_ADMIN') %}
+		{% if draft_count %}
+			<div class="alert alert-warning">
+				<p>W systemie znajdują się niezatwierdzone przelewy z importu.</p>
+				<p>Aby je przejrzeć należy kliknąć:
+					<strong>
+						<a href="{{ path('app_import_confirm')}}">przegląd importu</a>
+					</strong>.
+				</p>
+			</div>
+		{% endif %}
+	{% endif %}
+
+	{# START: OSTATNIE LOGOWANIE #}
+	<div class="col-12 mb-3">
+		<div class="card p-3 ">
+			<div class="row row-cols-2">
+				<div class="col">Czas ostatniego logowania:</div>
+				<div class="col text-end">{{ app.user.loginSuccess|date('Brak', 'Y-m-d H:i:s') }}</div>
+				<div class="col">Ostatnie nieudane logowanie:</div>
+				<div class="col text-end">{{ app.user.loginFailed|date('Brak', 'Y-m-d H:i:s') }}</div>
+			</div>
+		</div>
+	</div>
+	{# END: OSTATNIE LOGOWANIE #}
+
+	{% if is_granted('ROLE_ADMIN') %}
+		<div class="col-lg-5 col-xl-4 mb-3">
+			<div class="card">
+				<h5 class="card-header">Historia banku</h5>
+				<div class="card-body">
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								Ostatnia aktualizacja
+							</div>
+							<div class="col text-end">
+								{{summary.updated}}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								Saldo
+							</div>
+							<div class="col text-end">
+								{% if summary.total < 0 %}
+									<span class="text-danger">
+										{{summary.total|formatPLN}}
+									</span>
+								{% else %}
+									{{summary.total|formatPLN}}
+								{% endif %}
+							</div>
+						</div>
+					</div>
+
+					<p class="mb-3">
+						<table class="table table-sm caption-top fs-7">
+							<caption>Lista 5 ostatnich transakcji</caption>
+							<thead>
+								<tr>
+									<th scope="col">Data</th>
+									<th scope="col">Kwota</th>
+									<th scope="col">Opis</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if summary.last5 is empty %}
+									<tr>
+										<td colspan="3">
+											<i class="fa-solid fa-ghost"></i>
+											brak danych...</td>
+									</tr>
+								{% endif %}
+								{% for row in summary.last5 %}
+									<tr>
+										<td>{{row.date|date}}</td>
+										<td class="text-end">{{row.value|formatPLN}}</td>
+										<td data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{row.description}}">{{row.description|u.truncate(30, '...')}}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</p>
+					<a href="{{ path('app_bank_history')}}" class="btn btn-primary">Szczegóły</a>
+					<a href="{{ path('app_import_upload')}}" class="btn btn-primary">
+						<i class="fa-solid fa-upload"></i>
+						Importuj dane z banku
+					</a>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock content %}

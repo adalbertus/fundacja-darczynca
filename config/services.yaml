@@ -1,0 +1,39 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+    # dostęp do wersji z poziomu szablonów jest zdefiniowany w twig.yaml
+    app.version: 0.1
+    app.name: '%env(APP_NAME)%'
+    app.contact_email: '%env(APP_CONTACT_EMAIL)%'
+    app.webpage_url: '%env(APP_WEBPAGE_URL)%'
+    app.color_theme: 'dark'
+    environment: '%env(APP_ENV)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    App\Service\CsvParser\:
+        resource: '../src/Service/CsvParser/*'
+        public: true
+
+    # nie rozumiem dlaczego teraz muszę ustawiać to jako public: true...
+    App\Service\BankHistoryCsvReaderService:
+        public: true

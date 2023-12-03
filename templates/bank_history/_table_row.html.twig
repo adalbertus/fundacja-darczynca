@@ -1,0 +1,60 @@
+{# wiersz tabeli używany w bank_history/index oraz import/confirm #}
+
+{% set row_class = '' %}
+{% if not row.isValid %}
+	{% set row_class = 'table-danger' %}
+{% endif %}
+
+<tr data-id="{{row.id}}" class="{{row_class}}">
+	<td>
+		{{ row.date|date('Y-m-d') }}
+	</td>
+	<td class="text-end">
+		{% if row.value < 0 %}
+			<span class="text-danger">{{ row.value | formatPLN }}</span>
+		{% else %}
+			{{ row.value | formatPLN }}
+		{% endif %}
+	</td>
+	<td>
+		{% if row.category == 'brak' %}
+			<div class="px-2 py-1 bg-light-subtle border border-light-subtle rounded-2 bg-opacity-25 text-center">
+				<span class="text-warning">{{row.category|categoryName}}</span>
+			</div>
+		{% else %}
+			<div class="px-2 py-1 bg-light-subtle border border-light-subtle rounded-2 bg-opacity-25 text-center">
+				<span>{{row.category|categoryName}}</span>
+			</div>
+		{% endif %}
+
+	</td>
+	<td class="lh-sm">
+		<div class="mb-1">
+			<span class="fs-7 text-secondary">Nadawca</span>
+			<div>
+				{{ row.sendername}}
+				{% if row.donor %}
+					{% include "donor/_donor.html.twig" with { donor: row.donor} %}
+				{% endif %}
+			</div>
+		</div>
+		<div>
+			<span class="fs-7 text-secondary">Opis przelewu</span>
+			<div>
+				{{ row.description }}
+			</div>
+		</div>
+	</td>
+	<td>
+		{% if row.flagged %}
+			<i class="fa-solid fa-flag fa-beat text-danger"></i>
+		{% endif %}
+	</td>
+	{# <td> #}
+	{# {% include "bank_history/_row_details.html.twig" %} #}
+	{# </td> #}
+		<td>
+			<div class="btn-group"> <a class="btn btn-primary btn-sm" href="{{path('app_bank_history_update', {id: row.id})}}">Edytuj</a>
+		</div>
+	</td>
+</tr>

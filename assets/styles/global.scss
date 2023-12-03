@@ -1,0 +1,68 @@
+// assets/styles/global.scss
+@import url('https://fonts.googleapis.com/css2?family=Figtree&family=Mukta&family=Noto+Sans&family=Poppins&display=swap');
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+@import './custom.scss';
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    font-family: 'Figtree', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    // font-family: 'Mukta', sans-serif;
+    // font-family: 'Noto Sans', sans-serif;
+    // font-family: 'Poppins', sans-serif;
+}
+
+.version {
+    font-size: x-small;
+    // font-family: 'Courier New', Courier, monospace;
+}
+
+.alert {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    background-color: var(--alert-bg, var(--bs-gray-100));
+    border-left: 0.3rem solid var(--alert-border, var(--bs-gray-300));
+    border-top: 1;
+    border-bottom: 1;
+    border-right: 1;
+    border-radius: 0;
+}
+
+.alert h4 {
+    margin-bottom: .25rem
+}
+
+.alert>:last-child {
+    margin-bottom: 0
+}
+
+.alert+.alert {
+    margin-top: -.25rem
+}
+
+.alert .highlight {
+    background-color: $gray-900;
+}
+
+.alert-success {
+    --alert-bg: rgba(var(--bs-success-rgb), .15);
+    --alert-border: rgba(var(--bs-success-rgb), .85)
+}
+
+.alert-info {
+    --alert-bg: rgba(var(--bs-info-rgb), .15);
+    --alert-border: rgba(var(--bs-info-rgb), .85)
+}
+
+.alert-warning {
+    --alert-bg: rgba(var(--bs-warning-rgb), .15);
+    --alert-border: rgba(var(--bs-warning-rgb), .85)
+}
+
+.alert-danger {
+    --alert-bg: rgba(var(--bs-danger-rgb), .15);
+    --alert-border: rgba(var(--bs-danger-rgb), .85)
+}
